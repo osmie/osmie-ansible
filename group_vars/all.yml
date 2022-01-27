@@ -13,6 +13,7 @@ mysql_python_package_debian: python3-mysqldb
 # certbot (external role vars)
 certbot_auto_renew_minute: "20"
 certbot_auto_renew_hour: "5"
+certbot_auto_renew_user: "{{ vault_certbot_auto_renew_user }}"
 certbot_create_if_missing: true
 certbot_create_method: standalone
 certbot_create_standalone_stop_services:

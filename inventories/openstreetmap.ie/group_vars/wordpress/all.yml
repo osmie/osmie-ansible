@@ -1,42 +1,45 @@
 ---
 # Server hostname that's DNS resolvable
-server_hostname: "server01.cloudprovider.net"
+server_hostname: "web01.prod.openstreetmap.ie"
 
 # Hostname the site will be accessible from
-site_hostname: "web01.example.com"
+site_hostname: "www.openstreetmap.ie"
 
 # Database setup
 # Variables will be passed to the MySql role
-mysql_root_password: top-secret
+mysql_root_password: "{{ vault_mysql_root_password }}"
 mysql_databases:
   - name: wordpress
 mysql_users:
-  - name: wordpress_user
+  - name: "{{ vault_mysql_wpuser }}"
     host: "%"
-    password: super-secret
+    password: "{{ vault_mysql_wpuser_password }}"
     priv: "wordpress.*:ALL"
+    state: present
 
 
 # certbot (external role vars)
-certbot_admin_email: domains@domain.com
+certbot_admin_email: "{{ vault_certbot_admin_email }}"
 certbot_certs:
   - domains:
     - "{{ server_hostname }}" # must be DNS resolvable
 
 
 # Wordpress configuration
-wordpress_site_title: "Cool Wordpress Site"
-wordpress_admin_email: "user@coolwordpress.com"
-wordpress_admin_username: user
-wordpress_admin_password: unbreakable-secret
+wordpress_site_title: "OpenStreetMap Ireland"
+wordpress_admin_email: "{{ vault_wordpress_admin_email }}"
+wordpress_admin_username: "{{ vault_wordpress_admin_username }}"
+wordpress_admin_password: "{{ vault_wordpress_admin_password }}"
 wordpress_plugins:
-  - nginx-cache
-  - redis-cache
-  - duo-wordpress
   - akismet
+  - duo-wordpress
+  - nginx-cache
+  - osm
+  - paid-memberships-pro
+  - redis-cache
+  - regenerate-thumbnails
   - updraftplus
   - wordpress-seo
-  - regenerate-thumbnails
 
 # Plugins to install from inventories/<your_inventory>/files/plugins
 # wordpress_zip_plugins:

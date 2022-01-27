@@ -1,0 +1,8 @@
+[all]
+web01.prod.openstreetmap.ie ansible_host=20.105.130.132
+
+[wordpress]
+web01.prod.openstreetmap.ie ansible_host=20.105.130.132
+
+[wordpress:vars]
+ansible_ssh_common_args='-F ~/.ssh/az-config'
